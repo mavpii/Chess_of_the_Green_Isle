@@ -315,8 +315,6 @@ function ctl_chess_select_cancel(image_move, image_attack, chess_debug)
 	
     wesnoth.game_events.on_mouse_button = nil
 
-    wesnoth.interface.allow_end_turn(true)
-
     wesnoth.units.select()
 	
 	wml.variables["ctl_chess_active"] = true
@@ -426,8 +424,6 @@ end
 function ctl_chess_moveset_king(chess_id, image_move, image_attack, chess_debug)
     local selected_target_hexes = {}
 
-    wesnoth.interface.allow_end_turn(false)
-
     local chess_piece = (wesnoth.units.find_on_map({id = chess_id})) [1]
 
     for xx = chess_piece.x - 1, chess_piece.x + 1 do
@@ -459,9 +455,7 @@ end
 --queen
 function ctl_chess_moveset_queen(chess_id, image_move, image_attack, chess_debug)
     local selected_target_hexes = {}
-
-    wesnoth.interface.allow_end_turn(false)
-
+	
     local chess_piece = wesnoth.units.find_on_map({id = chess_id})[1]
 
     local directions = {"n","s","ne","nw","sw","se"}
@@ -499,8 +493,6 @@ end
 --pawn
 function ctl_chess_moveset_pawn(chess_id, image_move, image_attack, chess_debug)
     local selected_target_hexes = {}
-
-    wesnoth.interface.allow_end_turn(false)
 
     local chess_piece = wesnoth.units.find_on_map({id = chess_id})[1]
 	
@@ -566,8 +558,6 @@ end
  function ctl_chess_moveset_rook(chess_id, image_move, image_attack, chess_debug)
     local selected_target_hexes = {}
 
-    wesnoth.interface.allow_end_turn(false)
-
     local chess_piece = wesnoth.units.find_on_map({id = chess_id})[1]
 
     local directions = {"n","s"}
@@ -606,8 +596,6 @@ end
 function ctl_chess_moveset_bishop(chess_id, image_move, image_attack, chess_debug)
     local selected_target_hexes = {}
 
-    wesnoth.interface.allow_end_turn(false)
-
     local chess_piece = wesnoth.units.find_on_map({id = chess_id})[1]
 
     local directions = {"ne","nw","sw","se"}
@@ -645,8 +633,6 @@ end
 --knight
 function ctl_chess_moveset_knight(chess_id, image_move, image_attack, chess_debug)
     local selected_target_hexes = {}
-
-    wesnoth.interface.allow_end_turn(false)
 
     local chess_piece = (wesnoth.units.find_on_map({id = chess_id})) [1]
 
@@ -722,7 +708,7 @@ function ctl_chess_select(chess_type, chess_id, image_move, image_attack)
 	
     wesnoth.game_events.on_mouse_button = function(screen_x, screen_y, button, pressed)
         if pressed and button == "left" then
-			wesnoth.sync.invoke_command("ctl_chess", {type="_click", x=screen_x, y=screen_y, chess_id = chess_id, image_move = image_move, image_attack = image_attack}, selected_target_hexes)
+			wesnoth.sync.invoke_command("ctl_chess", {type="_click", x=screen_x, y=screen_y, chess_id = chess_id, image_move = image_move, image_attack = image_attack})
         end
     end
 end
@@ -730,10 +716,6 @@ end
 --click on selected piece
 function ctl_chess_click(Table)
     local chess_piece = (wesnoth.units.find_on_map({id = Table.chess_id})) [1]
-	
-	local selected_target_hexes = ctl_chess_moveset_pawn(Table.chess_id, Table.image_move, Table.image_attack, false)
-	local excluded_target_hexes = ctl_chess_get_excluded_moves(Table.chess_id)
-	selected_target_hexes = ctl_chess_exclude_moves(selected_target_hexes, excluded_target_hexes, Table.image_move, Table.image_attack)
 
     for _, target_hex in ipairs(selected_target_hexes) do
         if Table.x == target_hex.x and Table.y == target_hex.y then
@@ -761,8 +743,6 @@ function ctl_chess_click(Table)
                     }) 
 				end
 			end
-		    
-            wesnoth.interface.allow_end_turn(true)
 		    
             wesnoth.units.select()
             return
@@ -794,19 +774,22 @@ register_mouse_handler(function(x, y)
 		local chess_image_move = "misc/buff.png"
 		local chess_image_attack = "misc/attack.png"
     	
+		local ctl_chess_type
 		if selected_unit.type == "Peasant" or selected_unit.type == "Walking Corpse" then
-			ctl_chess_select(ctl_chess_moveset_pawn, selected_unit.id, chess_image_move,   chess_image_attack)	
+		    ctl_chess_type = ctl_chess_moveset_pawn
 		elseif selected_unit.type == "Daeola_L1_Mage" or selected_unit.type == "Wesfolk Princess" then
-			ctl_chess_select(ctl_chess_moveset_queen, selected_unit.id, chess_image_move,  chess_image_attack)	
+		    ctl_chess_type = ctl_chess_moveset_queen
         elseif selected_unit.type == "Haralin_L2" or selected_unit.type == "Lenvan" then
-			ctl_chess_select(ctl_chess_moveset_king, selected_unit.id, chess_image_move,   chess_image_attack)	
+		    ctl_chess_type = ctl_chess_moveset_king
         elseif selected_unit.type == "Highwayman_Peasant" or selected_unit.type == "Bone Skeleton" then
-			ctl_chess_select(ctl_chess_moveset_rook, selected_unit.id, chess_image_move,   chess_image_attack)	
+		    ctl_chess_type = ctl_chess_moveset_rook
         elseif selected_unit.type == "Knight" or selected_unit.type == "Wesfolk Chariot" then
-			ctl_chess_select(ctl_chess_moveset_knight, selected_unit.id, chess_image_move, chess_image_attack)	
+		    ctl_chess_type = ctl_chess_moveset_knight
         elseif selected_unit.type == "Lieutenant" or selected_unit.type == "Death Squire" then
-            ctl_chess_select(ctl_chess_moveset_bishop, selected_unit.id, chess_image_move, chess_image_attack)				
+		    ctl_chess_type = ctl_chess_moveset_bishop	
         end	
+		
+		ctl_chess_select(ctl_chess_type, selected_unit.id, chess_image_move, chess_image_attack)	
     
         wesnoth.interface.delay(500)
         wesnoth.units.select()
