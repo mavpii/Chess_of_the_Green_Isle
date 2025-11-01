@@ -231,8 +231,7 @@ function ctl_chess_check(chess_id)
                 end
             end
         end
-
-		if check then
+		
 		--перевірка на мат
 		    local all_enemy_chess_pieces = wesnoth.units.find_on_map{ side = king_side }
 		    local checkmate = true
@@ -251,12 +250,15 @@ function ctl_chess_check(chess_id)
 		        end
 		    end
 		    
-		    if checkmate then
+		    if checkmate and check then
                 wesnoth.interface.add_chat_message("Info", ("МАТ! | CHECKMATE!"))
 		    	return checkmate
             end
-		
-		end
+			
+			if checkmate and not check then
+                wesnoth.interface.add_chat_message("Info", ("ПАТ! | STALEMATE!"))
+		    	return checkmate
+            end
 		
 	end
 end
