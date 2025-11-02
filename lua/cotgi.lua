@@ -761,13 +761,19 @@ function ctl_chess_ai_make_move(ai_side)
     -- check for checkmate
     local cm = ctl_chess_check(choice.unit.id)
     if cm then
-    wml.variables["ctl_chess_active"] = false
-    if choice.unit.side == 1 then
-    wml.fire.endlevel({ result = "victory", side = 1 })
-    else
-    wml.fire.endlevel({ result = "victory", side = 2 })
+        wml.variables["ctl_chess_active"] = false
+	    if choice.unit.side == 1 then
+	        wml.fire.kill({
+                id = "Wesfolk_Leader",
+	        	force_scroll = false
+            })
+	    else
+	        wml.fire.kill({
+                id = "Islefolk_Leader",
+	        	force_scroll = false
+            })
+	    end
     end
-        end
     end
 end
 
@@ -811,15 +817,15 @@ function ctl_chess_click(Table)
 			if ctl_chess_checkmate then
 			    wml.variables["ctl_chess_active"] = false
 			    if chess_piece.side == 1 then
-				    wml.fire.endlevel({
-                        result = "victory",
-                    	side = 1
+				    wml.fire.kill({
+                        id = "Wesfolk_Leader",
+	                	force_scroll = false
                     })
 				else
-				    wml.fire.endlevel({
-                        result = "victory",
-                    	side = 2
-                    }) 
+				    wml.fire.kill({
+                        id = "Islefolk_Leader",
+	                	force_scroll = false
+                    })
 				end
 			end
 			
