@@ -1,0 +1,84 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: https://bugs.wesnoth.org/\n"
+"POT-Creation-Date: 2025-11-20 20:18 UTC\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. [multiplayer]: id=CotGI
+#: Chess_of_the_Green_Isle/scenarios/Chess.cfg:4
+msgid "2p — Chess of the Green Isle"
+msgstr ""
+
+#. [multiplayer]: id=CotGI
+#: Chess_of_the_Green_Isle/scenarios/Chess.cfg:5
+msgid ""
+"Decide the fate of the Green Isle using... chess?\n"
+"\n"
+"Choose Islefolk or Wesfolk, and play with a friend or the computer in a variation of chess for a hexagonal board, Polgar Starchess, in The Battle for Wesnoth.\n"
+"\n"
+"Every side gets 5 pawns and 5 pieces (king, queen, rook, bishop and knight), which are placed randomly at the start of every game.\n"
+"\n"
+"To play against the AI, set the enemy side to Nobody/Null. Do NOT use Computer Player!"
+msgstr ""
+
+#. [side]
+#: Chess_of_the_Green_Isle/scenarios/Chess.cfg:37
+msgid "Islefolk"
+msgstr ""
+
+#. [side]
+#: Chess_of_the_Green_Isle/scenarios/Chess.cfg:50
+msgid "Wesfolk"
+msgstr ""
+
+#. [objective]: condition=win
+#: Chess_of_the_Green_Isle/scenarios/Chess.cfg:216
+msgid "Checkmate the enemy king"
+msgstr ""
+
+#. [objective]: condition=lose
+#: Chess_of_the_Green_Isle/scenarios/Chess.cfg:220
+msgid "Your king is checkmated"
+msgstr ""
+
+#. [note]
+#: Chess_of_the_Green_Isle/scenarios/Chess.cfg:224
+msgid "The king moves 1 hex around itself."
+msgstr ""
+
+#. [note]
+#: Chess_of_the_Green_Isle/scenarios/Chess.cfg:227
+msgid "The queen moves in all directions."
+msgstr ""
+
+#. [note]
+#: Chess_of_the_Green_Isle/scenarios/Chess.cfg:230
+msgid "The rook moves only vertically."
+msgstr ""
+
+#. [note]
+#: Chess_of_the_Green_Isle/scenarios/Chess.cfg:233
+msgid "The bishop moves only diagonally."
+msgstr ""
+
+#. [note]
+#: Chess_of_the_Green_Isle/scenarios/Chess.cfg:236
+msgid "The knight moves in an L-shape."
+msgstr ""
+
+#. [note]
+#: Chess_of_the_Green_Isle/scenarios/Chess.cfg:239
+msgid "The pawn moves straight 1 hex and captures diagonally."
+msgstr ""
+
+#. [note]
+#: Chess_of_the_Green_Isle/scenarios/Chess.cfg:242
+msgid "Move the pawn to the edge of the board to promote it."
+msgstr ""
+
